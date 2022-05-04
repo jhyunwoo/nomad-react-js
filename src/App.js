@@ -1,10 +1,30 @@
-import logo from "./logo.svg";
+import { useState } from "react";
 import "./App.css";
 
 function App() {
+  const [toDo, setToDo] = useState("");
+  const [toDos, setToDos] = useState([]);
+  const onChange = (event) => setToDo(event.target.value);
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (toDo === "") {
+      return;
+    }
+    setToDos((currentArray) => [toDo, ...currentArray]);
+    setToDo("");
+  };
   return (
     <div>
-      <input type="text" placeholder="Write your to do..." />
+      <h1>My To Dos ({toDos.length})</h1>
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          placeholder="Write your to do..."
+          onChange={onChange}
+          value={toDo}
+        />
+        <button>Add To Do</button>
+      </form>
     </div>
   );
 }
